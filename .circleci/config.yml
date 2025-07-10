@@ -23,9 +23,9 @@ commands:
           command: |
             cd << parameters.path >>
             if [ -f package-lock.json ]; then
-              npm ci || npm install
+              npm ci --loglevel verbose || npm install --loglevel verbose
             else
-              npm install
+              npm install --loglevel verbose
             fi
       - save_cache:
           paths:
