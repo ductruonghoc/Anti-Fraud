@@ -14,6 +14,10 @@ commands:
         type: string
     steps:
       - checkout
+      - restore_cache:
+          keys:
+            - v1-dependencies-{{ checksum "<< parameters.path >>/package-lock.json" }}
+            - v1-dependencies-
       - run:
           name: Install dependencies
           command: |
@@ -23,6 +27,10 @@ commands:
             else
               npm install
             fi
+      - save_cache:
+          paths:
+            - << parameters.path >>/node_modules
+          key: v1-dependencies-{{ checksum "<< parameters.path >>/package-lock.json" }}
 
   # run_tests:
   #   description: "Run tests"
