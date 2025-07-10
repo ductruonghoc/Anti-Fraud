@@ -4,6 +4,8 @@ executors:
   node-executor:
     docker:
       - image: cimg/node:20.18
+    environment:
+      PUPPETEER_SKIP_CHROMIUM_DOWNLOAD: "true"
     working_directory: ~/repo
 
 commands:
@@ -14,6 +16,10 @@ commands:
         type: string
     steps:
       - checkout
+      - run: # step to install a browser
+          name: Install Chromium
+          command: |
+            sudo apt-get update && sudo apt-get install -y chromium-browser
       - restore_cache:
           keys:
             - v1-dependencies-{{ checksum "<< parameters.path >>/package-lock.json" }}
@@ -31,7 +37,6 @@ commands:
           paths:
             - << parameters.path >>/node_modules
           key: v1-dependencies-{{ checksum "<< parameters.path >>/package-lock.json" }}
-
   # run_tests:
   #   description: "Run tests"
   #   parameters:
