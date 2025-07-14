@@ -16,6 +16,9 @@ commands:
         type: string
     steps:
       - checkout
+      - run:
+          name: Verify PUPPETEER_SKIP_CHROMIUM_DOWNLOAD
+          command: echo $PUPPETEER_SKIP_CHROMIUM_DOWNLOAD # This should output "true"
       - run: # step to install a browser
           name: Install Chromium
           command: |
