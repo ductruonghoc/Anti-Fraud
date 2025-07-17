@@ -32,6 +32,7 @@ async function setAdminRole(email) {
       isAdmin: true,
       isModerator: true
     };
+    //Test
 
     await admin.auth().setCustomUserClaims(user.uid, customClaims);
     console.log(`✅ Admin role set successfully for ${email}`);
